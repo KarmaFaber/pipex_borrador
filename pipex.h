@@ -6,7 +6,7 @@
 /*   By: mzolotar <mzolotar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:33:37 by mzolotar          #+#    #+#             */
-/*   Updated: 2025/01/03 09:16:07 by mzolotar         ###   ########.fr       */
+/*   Updated: 2025/01/03 12:52:01 by mzolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdio.h>   //printf, perror
 # include <stdlib.h>  //exit
 # include <fcntl.h> // open
-# include <unistd.h> // read, write, dup2
+# include <unistd.h> // read, write, dup2, execve, dup, 
 # include <errno.h>	//referencias de error (errno, es f() no permitida).
 
 

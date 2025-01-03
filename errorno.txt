@@ -59,3 +59,47 @@ EFAULT: The file descriptors array is outside the accessible address space.
 EMFILE: Too many file descriptors are in use by the process.
 ENFILE: The system-wide limit on the total number of open files has been reached.
 #✦❖⋆━━❖⋆✦━━❖⋆✦•✦━━❖⋆end:⋆❖━━✦•✦━━❖⋆✦━━❖⋆✦━━❖⋆#
+
+
+
+Ejemplo 1 :
+
+#include <stdio.h>
+#include <string.h>
+
+void some_library_function(int *error_code)
+{
+    *error_code = 22; // EINVAL: "Invalid argument"
+}
+
+int main(void)
+{
+    int error_code;
+    some_library_function(&error_code);
+
+    ft_printf("Error devuelto: %s\n", strerror(error_code));
+    return 0;
+}
+
+Salida:
+Error devuelto: Invalid argument
+
+#✦❖⋆━━❖⋆✦━━❖⋆✦•✦━━❖⋆end:⋆❖━━✦•✦━━❖⋆✦━━❖⋆✦━━❖⋆#
+
+Ejemplo 2:
+
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+    int my_error_code = 5; // EIO: "Input/output error"
+    ft_printf("Error personalizado: %s\n", strerror(my_error_code));
+    return 0;
+}
+
+Salida:
+
+Error personalizado: Input/output error
+
+#✦❖⋆━━❖⋆✦━━❖⋆✦•✦━━❖⋆end:⋆❖━━✦•✦━━❖⋆✦━━❖⋆✦━━❖⋆#

@@ -1,0 +1,61 @@
+#include <errno.h>	//errno+referencias de error
+
+perror(strerror(referencia de error));
+
+perror(strerror(ENOENT));
+
+
+
+Aquí están las referencias de errores comunes que pueden devolver las funciones open, write, read, close, y pipe en inglés. Puedes incluirlas como comentarios en tu código para manejar adecuadamente los errores:
+
+1. open() Errors
+Los errores más comunes para open son:
+
+EACCES: Permission denied.
+EEXIST: File exists (when using O_CREAT | O_EXCL).
+EFAULT: The filename points to an invalid address.
+ELOOP: Too many symbolic links were encountered.
+ENAMETOOLONG: The filename is too long.
+ENOENT: File or directory does not exist.
+ENOTDIR: A component of the path is not a directory.
+EMFILE: The process has reached its limit on open file descriptors.
+ENFILE: The system limit on the total number of open files has been reached.
+#✦❖⋆━━❖⋆✦━━❖⋆✦•✦━━❖⋆end:⋆❖━━✦•✦━━❖⋆✦━━❖⋆✦━━❖⋆#
+
+2. write() Errors
+Los errores más comunes para write son:
+
+EBADF: The file descriptor is not valid or is not open for writing.
+EFAULT: The buffer is outside the accessible address space.
+EFBIG: The file is too large.
+EPIPE: A write was attempted on a pipe that is not open for reading (generates SIGPIPE).
+EINVAL: The file descriptor is inappropriate for writing.
+ENOSPC: No space left on the device.
+#✦❖⋆━━❖⋆✦━━❖⋆✦•✦━━❖⋆end:⋆❖━━✦•✦━━❖⋆✦━━❖⋆✦━━❖⋆#
+
+3. read() Errors
+Los errores más comunes para read son:
+
+EBADF: The file descriptor is not valid or is not open for reading.
+EFAULT: The buffer is outside the accessible address space.
+EINTR: The call was interrupted by a signal before any data was read.
+EIO: A low-level I/O error occurred while reading.
+EINVAL: The file descriptor is inappropriate for reading.
+ENXIO: No device corresponds to the file descriptor.
+#✦❖⋆━━❖⋆✦━━❖⋆✦•✦━━❖⋆end:⋆❖━━✦•✦━━❖⋆✦━━❖⋆✦━━❖⋆#
+
+4. close() Errors
+Los errores más comunes para close son:
+
+EBADF: The file descriptor is not valid.
+EINTR: The close call was interrupted by a signal.
+EIO: An I/O error occurred.
+#✦❖⋆━━❖⋆✦━━❖⋆✦•✦━━❖⋆end:⋆❖━━✦•✦━━❖⋆✦━━❖⋆✦━━❖⋆#
+
+5. pipe() Errors
+Los errores más comunes para pipe son:
+
+EFAULT: The file descriptors array is outside the accessible address space.
+EMFILE: Too many file descriptors are in use by the process.
+ENFILE: The system-wide limit on the total number of open files has been reached.
+#✦❖⋆━━❖⋆✦━━❖⋆✦•✦━━❖⋆end:⋆❖━━✦•✦━━❖⋆✦━━❖⋆✦━━❖⋆#

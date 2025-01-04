@@ -6,7 +6,7 @@
 /*   By: mzolotar <mzolotar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:33:37 by mzolotar          #+#    #+#             */
-/*   Updated: 2025/01/04 14:16:09 by mzolotar         ###   ########.fr       */
+/*   Updated: 2025/01/04 14:43:38 by mzolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ int	main(int argc, char *argv[], char *envp[]);
 
 /*#◉───▣───▢◇▢───▣───◉•◉───▣───▢Utils:▢───▣───◉•◉───▣───▢◇▢───▣───◉#*/
 //pipex_utils.c (/5)
-
+int perror_and_return_1 (short int ref);
 
 #endif

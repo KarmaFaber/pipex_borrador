@@ -17,10 +17,10 @@ int	main(int argc, char *argv[], char *envp[])
 	int pipfd[2];
 	pid_t pid;
 	
-	if (argc != 5)
+	if (argc != 5) 
 	{
-		//revisar si lo gestionamos con return 1 o con handle_exit() ???
-		ft_printf("aqui va fucnion handle_exit");
+    		perror("Error: Incorrect number of arguments\n");
+    		return (1);  
 	}
 		
 	//crear pipe
@@ -55,4 +55,3 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 	return (0);
 }
-

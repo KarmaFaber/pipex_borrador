@@ -6,13 +6,12 @@
 /*   By: mzolotar <mzolotar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:33:37 by mzolotar          #+#    #+#             */
-/*   Updated: 2025/01/04 13:16:35 by mzolotar         ###   ########.fr       */
+/*   Updated: 2025/01/04 14:16:09 by mzolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
-
 
 //#➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌──includes:──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌➔#
 
@@ -29,15 +28,14 @@
 # include <sys/wait.h> // wait, waitpid
 #include <sys/types.h> // wait, waitpid
 
-
-
 /*#◉───▣───▢◇▢───▣───◉•◉───▣───▢Main:▢───▣───◉•◉───▣───▢◇▢───▣───◉#*/
 
 //pipex.c (1/5)
 int	main(int argc, char *argv[], char *envp[]);
 
-/*#◉───▣───▢◇▢───▣───◉•◉───▣───▢Errors:▢───▣───◉•◉───▣───▢◇▢───▣───◉#*/
 
+/*#◉───▣───▢◇▢───▣───◉•◉───▣───▢Utils:▢───▣───◉•◉───▣───▢◇▢───▣───◉#*/
+//pipex_utils.c (/5)
 
 
 #endif

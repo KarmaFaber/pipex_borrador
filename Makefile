@@ -28,7 +28,7 @@ INCLUDES_LIBFT := -I$(LIBFT_DIR)
 
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢ push_swap srcs ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
-PIPEX_SRCS	:= pipex.c 
+PIPEX_SRCS	:= pipex.c pipex_utils.c
 
 PIPEX_OBJS	:= $(PIPEX_SRCS:.c=.o)
 

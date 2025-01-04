@@ -6,7 +6,7 @@
 /*   By: mzolotar <mzolotar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:33:40 by mzolotar          #+#    #+#             */
-/*   Updated: 2025/01/04 13:29:32 by mzolotar         ###   ########.fr       */
+/*   Updated: 2025/01/04 14:14:05 by mzolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,16 @@ int	main(int argc, char *argv[], char *envp[])
 	else if (pid == 0)
 	{
 		ft_printf("aqui va funcion con procesos hijo");
+		//	< archivo1 comando1
+		//	< infile ls -l
+		//	< argv[1] argv[2]
 	}
 	else
 	{
 		ft_printf("aqui va funcion con procesos padre");
+		//	comando2 > archivo2
+		//	wc -l > outfile
+		//	argv[3] > argv[4]
 	}
 	return (0);
 }

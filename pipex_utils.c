@@ -6,19 +6,24 @@
 /*   By: mzolotar <mzolotar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 14:14:26 by mzolotar          #+#    #+#             */
-/*   Updated: 2025/01/04 14:47:58 by mzolotar         ###   ########.fr       */
+/*   Updated: 2025/01/04 14:56:23 by mzolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /**
- * 
- * 
- * @brief 
+ * @brief Prints an error message based on the provided reference value.
  *
- * @param 
- * @return 
+ * This function handles different error cases and prints an appropriate error 
+ * message using `perror`. It is used to centralize error handling for specific 
+ * scenarios in the program. The function returns 1 to indicate an error.
+ *
+ * @param ref A short integer used to select the error case. 
+ *            1: Incorrect number of arguments.
+ *            2: Error creating pipe.
+ *            3: Error creating child process.
+ * @return Returns 1 to indicate an error.
  */
 
 int perror_and_return_1 (short int ref)

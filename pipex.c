@@ -18,7 +18,10 @@ int	main(int argc, char *argv[], char *envp[])
 	pid_t pid;
 	
 	if (argc != 5)
+	{
+		//revisar si lo gestionamos con return 1 o con handle_exit() ???
 		ft_printf("aqui va fucnion handle_exit");
+	}
 		
 	//crear pipe
 	if (pipe(pipfd) == -1)

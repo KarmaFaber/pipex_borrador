@@ -6,7 +6,7 @@
 /*   By: mzolotar <mzolotar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:33:37 by mzolotar          #+#    #+#             */
-/*   Updated: 2025/01/07 11:42:08 by mzolotar         ###   ########.fr       */
+/*   Updated: 2025/01/07 13:35:48 by mzolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ void	parent_process(char *argv[], int pipfd[], char *envp[]);
 int		main(int argc, char *argv[], char *envp[]);
 
 /*#◉───▣───▢◇▢───▣───◉•◉───▣───▢Utils:▢───▣───◉•◉───▣───▢◇▢───▣───◉#*/
-// pipex_utils.c (/5)
+// pipex_utils.c (5/5)
+char	**get_paths_from_env(char *envp[]);
+char	*find_command_in_paths(char *argv_cmd, char **paths);
 void	free_split_vars(char **split_to_free);
 int		open_fd(char *pathern, int flags, mode_t mode);
-int		perror_and_return_1(short int ref);
-void	perror_and_exit_1(short int ref);
+int		perror_and_handle(short int ref, int should_exit);
 
 #endif

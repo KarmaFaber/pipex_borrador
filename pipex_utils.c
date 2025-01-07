@@ -6,118 +6,150 @@
 /*   By: mzolotar <mzolotar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 14:14:26 by mzolotar          #+#    #+#             */
-/*   Updated: 2025/01/07 11:46:38 by mzolotar         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:03:08 by mzolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /**
- * @brief 
+ * @brief
  *
- * @param 
- * @return 
+ * @param
+ * @return
  */
 
-void free_split_vars(char **split_to_free)
+char	**get_paths_from_env(char *envp[])
 {
-	int i;
-	
-	i=0;
+	char	**paths;
+	int		i;
+
+	i = 0;
+	paths = NULL;
+	while (envp[i] != NULL)
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			paths = ft_split(envp[i] + 5, ':');
+			if (!paths)
+                perror("Error: ft_split failed to allocate memory");
+			break ;
+		}
+		i++;
+	}
+	if (!paths)
+		perror("Error: PATH variable not found");
+	return (paths);
+}
+
+/**
+ * @brief
+ *
+ * @param
+ * @return
+ */
+
+char	*find_command_in_paths(char *argv_cmd, char **paths)
+{
+	char	*path;
+	char	*full_path;
+	int		i;
+
+	i = 0;
+	path = NULL;
+	while (paths[i])
+	{
+		full_path = ft_strjoin(paths[i], "/");
+		if (!full_path)
+            break; // Evitar leaks en caso de fallo de memoria
+		path = ft_strjoin(full_path, argv_cmd);
+		free(full_path);
+		if (!path)
+            break; // Evitar leaks en caso de fallo de memoria
+		if (access(path, F_OK | X_OK) == 0)
+		{
+			free_split_vars(paths);
+			return (path);
+		}
+		free(path);
+		i++;
+	}
+	return (NULL);
+}
+
+/**
+ * @brief
+ *
+ * @param
+ * @return
+ */
+
+void	free_split_vars(char **split_to_free)
+{
+	int	i;
+
 	if (!split_to_free)
 		return ;
-	while(split_to_free[i])
+	i = 0;
+	while (split_to_free[i])
 	{
 		free(split_to_free[i]);
 		i++;
 	}
 	free(split_to_free);
-	split_to_free = NULL;
+	//split_to_free = NULL;
 }
 
-
 /**
- * @brief 
+ * @brief
  *
- * @param 
- * @return 
+ * @param
+ * @return
  */
 
-// revisar si el return exir(1) esta ok!!!
-
-int open_fd(char *pathern, int flags, mode_t mode)
+int	open_fd(char *pathern, int flags, mode_t mode)
 {
-	int fd;
-	
-	fd = open (pathern, flags, mode);
+	int	fd;
+
+	fd = open(pathern, flags, mode);
 	if (fd == -1)
-	{
-		perror_and_exit_1(1);
-		//perror("Error opening file open_fd\n");
-		//exit (EXIT_FAILURE);
-	}
+		return (perror_and_handle(4, 1));
 	return (fd);
 }
 
 /**
  * @brief Prints an error message based on the provided reference value.
  *
- * This function handles different error cases and prints an appropriate error 
- * message using `perror`. It is used to centralize error handling for specific 
- * scenarios in the program. The function returns 1 to indicate an error.
+ * This function handles different error cases and prints an appropriate error
+ * message using `perror`. It can either return `1` to indicate an error or
+ * terminate the program by calling `exit(EXIT_FAILURE)`.
  *
- * @param ref A short integer used to select the error case. 
+ * @param ref A short integer used to select the error case.
  *            1: Incorrect number of arguments.
  *            2: Error creating pipe.
  *            3: Error creating child process.
- * @return Returns 1 to indicate an error.
+ *            4: Error opening file.
+ *            5: Error with dup2.
+ * @param should_exit If `1`,
+	the function exits the program with `EXIT_FAILURE`.
+ *                    If `0`, it simply returns `1`.
+ * @return Returns `1` if `should_exit` is `0`. Otherwise, it exits the program.
  */
 
-int perror_and_return_1 (short int ref)
+int	perror_and_handle(short int ref, int should_exit)
 {
 	if (ref == 1)
-	{
 		perror("Error: Incorrect number of arguments");
-	}
 	else if (ref == 2)
-	{
 		perror("Error creating pipe");
-	}
 	else if (ref == 3)
-	{
 		perror("Error creating child process");
-	}
-	return (1);
-}
-
-
-/**
- * @brief Prints an error message based on the provided reference value.
- *
- * This function handles different error cases and prints an appropriate error 
- * message using `perror`. It is used to centralize error handling for specific 
- * scenarios in the program. 
- *
- * @param ref A short integer used to select the error case. 
- *            1: Error opening file
- *            2: dup2 error
- *            3: execve error
- * @return exit (EXIT_FAILURE).
- */
-
-void perror_and_exit_1 (short int ref)
-{
-	if (ref == 1)
-	{
+	else if (ref == 4)
 		perror("Error opening file");
-	}
-	else if (ref == 2)
-	{
-		perror("Error: dup2 error");
-	}
-	else if (ref == 3)
-	{
-		perror("Error: execve error");
-	}
-	exit (EXIT_FAILURE);
+	else if (ref == 5)
+		perror("Error with dup2");
+
+	if (should_exit)
+		exit(EXIT_FAILURE);
+	return (1);
 }

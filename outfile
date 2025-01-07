@@ -1,7 +1,0 @@
-path en find_path(): /bin/grep 
-----
-permisos ok
-pathern en exec_command(): /bin/grep 
------
-exec_argvs[0]: [grep]
-exec_argvs[1]: ["pipex"]

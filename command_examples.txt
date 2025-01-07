@@ -1,0 +1,41 @@
+//enunciado-----------------------------------------------------------------
+// archivo1 < comando1 | comando2 > archivo2
+
+C:		./pipex infile "ls -l" "wc -l" outfile
+bash:	ls -l < infile | wc -l > outfile
+
+C:		./pipex infile "ls -l" "wc -w" outfile
+bash:	ls -l < infile | wc -w > outfile
+
+C:		./pipex infile "grep a1" "wc -l" outfile
+bash:	grep "a1" < infile | wc -l > outfile 
+
+
+
+//otros-------------------------------------------------------------------
+C:		./pipex infile "grep hola" "wc -w" outfile
+bash: 	grep "hola" < infile | wc -w  > outfile
+
+C:		./pipex infile "grep a1" "wc -w" outfile
+bash: 	grep "a1" < infile | wc -w  > outfile
+
+C:		./pipex infile "ls -l" "grep pipex" outfile
+bash:	ls -l < infile | grep "pipex" > outfile
+
+C:		./pipex 
+bash:	
+
+C:		./pipex 
+bash:	
+
+C:		./pipex 
+bash:	
+
+C:		./pipex 
+bash:	
+
+C:		./pipex 
+bash:	
+
+C:		./pipex 
+bash:	

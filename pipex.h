@@ -6,7 +6,7 @@
 /*   By: mzolotar <mzolotar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:33:37 by mzolotar          #+#    #+#             */
-/*   Updated: 2025/01/04 14:43:38 by mzolotar         ###   ########.fr       */
+/*   Updated: 2025/01/07 11:42:08 by mzolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,28 @@
 //#➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌──includes:──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌➔#
 
 # include "libft/libft.h"
+# include <errno.h>     //referencias de error (errno, es f() no permitida).
+# include <fcntl.h>     // open
+# include <stdio.h>     //printf, perror
+# include <stdlib.h>    //exit
+# include <sys/types.h> // wait, waitpid
+# include <sys/wait.h>  // wait, waitpid
+# include <unistd.h>    // read, write, dup2, execve, dup, unlink, pipe, fork,
 
-# include <limits.h>  //limits
-# include <stdbool.h> //bollean
-# include <stddef.h>  // size_t
-# include <stdio.h>   //printf, perror
-# include <stdlib.h>  //exit
-# include <fcntl.h> // open
-# include <unistd.h> // read, write, dup2, execve, dup, unlink, pipe, fork, 
-# include <errno.h>	//referencias de error (errno, es f() no permitida).
-# include <sys/wait.h> // wait, waitpid
-#include <sys/types.h> // wait, waitpid
+/*#◉───▣───▢◇▢───▣───◉•◉───▣───▢Main code:▢───▣───◉•◉───▣───▢◇▢───▣───◉#*/
 
-/*#◉───▣───▢◇▢───▣───◉•◉───▣───▢Main:▢───▣───◉•◉───▣───▢◇▢───▣───◉#*/
-
-//pipex.c (1/5)
-int	main(int argc, char *argv[], char *envp[]);
-
+// pipex.c (5/5)
+char	*find_path(char *argv_cmd, char *envp[]);
+void	execve_command(char *argv, char **envp);
+void	child_process(char *argv[], int pipfd[], char *envp[]);
+void	parent_process(char *argv[], int pipfd[], char *envp[]);
+int		main(int argc, char *argv[], char *envp[]);
 
 /*#◉───▣───▢◇▢───▣───◉•◉───▣───▢Utils:▢───▣───◉•◉───▣───▢◇▢───▣───◉#*/
-//pipex_utils.c (/5)
-int perror_and_return_1 (short int ref);
+// pipex_utils.c (/5)
+void	free_split_vars(char **split_to_free);
+int		open_fd(char *pathern, int flags, mode_t mode);
+int		perror_and_return_1(short int ref);
+void	perror_and_exit_1(short int ref);
 
 #endif

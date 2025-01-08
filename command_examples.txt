@@ -1,15 +1,15 @@
 #✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Enunciado: ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀#
 // archivo1 < comando1 | comando2 > archivo2
 
-1. Contar líneas en un archivo
+1. Contar líneas en un archivo (cuidado con este comando)
 C:		./pipex infile "ls -l" "wc -l" outfile
 bash:	ls -l < infile | wc -l > outfile
 
-2. Contar palabras en un archivo
+2. Contar palabras en un archivo (ok)
 C:		./pipex infile "ls -l" "wc -w" outfile
 bash:	ls -l < infile | wc -w > outfile
 
-3. Buscar un patrón y contar líneas
+3. Buscar un patrón y contar líneas (ok)
 C:		./pipex infile "grep a1" "wc -l" outfile
 bash:	grep "a1" < infile | wc -l > outfile 
 

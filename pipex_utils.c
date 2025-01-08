@@ -6,7 +6,7 @@
 /*   By: mzolotar <mzolotar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 14:14:26 by mzolotar          #+#    #+#             */
-/*   Updated: 2025/01/07 14:03:08 by mzolotar         ###   ########.fr       */
+/*   Updated: 2025/01/08 10:17:26 by mzolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**get_paths_from_env(char *envp[])
 		{
 			paths = ft_split(envp[i] + 5, ':');
 			if (!paths)
-                perror("Error: ft_split failed to allocate memory");
+				perror("Error: ft_split failed to allocate memory");
 			break ;
 		}
 		i++;
@@ -61,11 +61,11 @@ char	*find_command_in_paths(char *argv_cmd, char **paths)
 	{
 		full_path = ft_strjoin(paths[i], "/");
 		if (!full_path)
-            break; // Evitar leaks en caso de fallo de memoria
+			break ;
 		path = ft_strjoin(full_path, argv_cmd);
 		free(full_path);
 		if (!path)
-            break; // Evitar leaks en caso de fallo de memoria
+			break ;
 		if (access(path, F_OK | X_OK) == 0)
 		{
 			free_split_vars(paths);
@@ -97,7 +97,6 @@ void	free_split_vars(char **split_to_free)
 		i++;
 	}
 	free(split_to_free);
-	//split_to_free = NULL;
 }
 
 /**
@@ -148,7 +147,6 @@ int	perror_and_handle(short int ref, int should_exit)
 		perror("Error opening file");
 	else if (ref == 5)
 		perror("Error with dup2");
-
 	if (should_exit)
 		exit(EXIT_FAILURE);
 	return (1);

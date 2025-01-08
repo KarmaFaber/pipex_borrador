@@ -63,13 +63,58 @@ re: fclean all
 valgrind: all
 
 	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌──Running Valgrind..──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌──$(RESET)"
-#	@-$(VALGRIND) ./pipex infile "grep a1" "wc -l" outfile
-	@-$(VALGRIND) ./$(NAME) infile "ls -l" "wc -w" outfile
+	@-$(VALGRIND) ./pipex infile "ls -l" "wc -l" outfile
+#	@-$(VALGRIND) ./$(NAME) infile "ls -l" "wc -w" outfile
 	@test/hs_files/./open_valgrind_log.sh
 	@echo "$(CURRENT_COLOR)➵⤐╌╌➣⋆➣╌─⤏➵•➵⤐─╌╌➣⋆➣── Valgrind completed. Check valgrind_output.log for details. ─╌➣⋆➣╌─⤏➵•➵⤐─╌╌➣⋆➣╌╌─$(RESET)"
 	
 clean_valgrind:
 	test/hs_files/./clean_valgrind.sh
+
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢ Sanitizers ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+#◉──▢◇▢───▣───◉•◉────▢AddressSanitizer ▢────◉•◉───▣───▢◇▢──◉#
+
+asan: $(PIPEX_OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) -fsanitize=address -g $(PIPEX_SRCS) -o $(NAME) -L$(LIBFT_DIR) -lft $(INCLUDES_LIBFT)
+	@echo "$(CURRENT_COLOR) $(NAME) compiled with AddressSanitizer.\n$(RESET)"
+
+run_asan: asan
+	@echo "$(CURRENT_COLOR)➵ Running with AddressSanitizer: $(RESET)"
+	./$(NAME) infile "ls -l" "wc -l" outfile
+	@echo "$(CURRENT_COLOR)➵ AddressSanitizer run completed.$(RESET)"
+
+#◉──▢◇▢───▣───◉•◉────▢UndefinedBehaviorSanitizer ▢────◉•◉───▣───▢◇▢──◉#
+
+usan: $(PIPEX_OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) -fsanitize=undefined -g $(PIPEX_SRCS) -o $(NAME) -L$(LIBFT_DIR) -lft $(INCLUDES_LIBFT)
+	@echo "$(CURRENT_COLOR) $(NAME) compiled with UndefinedBehaviorSanitizer.\n$(RESET)"
+
+run_usan: usan
+	@echo "$(CURRENT_COLOR)➵ Running with UndefinedBehaviorSanitizer: $(RESET)"
+	./$(NAME) infile "ls -l" "wc -l" outfile
+	@echo "$(CURRENT_COLOR)➵ UndefinedBehaviorSanitizer run completed.$(RESET)"
+
+#◉──▢◇▢───▣───◉•◉────▢LeakSanitizer ▢────◉•◉───▣───▢◇▢──◉#
+
+lsan: $(PIPEX_OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) -fsanitize=leak -g $(PIPEX_SRCS) -o $(NAME) -L$(LIBFT_DIR) -lft $(INCLUDES_LIBFT)
+	@echo "$(CURRENT_COLOR) $(NAME) compiled with LeakSanitizer.\n$(RESET)"
+
+run_lsan: lsan
+	@echo "$(CURRENT_COLOR)➵ Running with LeakSanitizer: $(RESET)"
+	./$(NAME) infile "ls -l" "wc -l" outfile
+	@echo "$(CURRENT_COLOR)➵ LeakSanitizer run completed.$(RESET)"
+
+#◉──▢◇▢───▣───◉•◉────▢ThreadSanitizer ▢────◉•◉───▣───▢◇▢──◉#
+
+tsan: $(PIPEX_OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) -fsanitize=thread -g $(PIPEX_SRCS) -o $(NAME) -L$(LIBFT_DIR) -lft $(INCLUDES_LIBFT)
+	@echo "$(CURRENT_COLOR) $(NAME) compiled with ThreadSanitizer.\n$(RESET)"
+
+run_tsan: tsan
+	@echo "$(CURRENT_COLOR)➵ Running with ThreadSanitizer: $(RESET)"
+	./$(NAME) infile "ls -l" "wc -l" outfile
+	@echo "$(CURRENT_COLOR)➵ ThreadSanitizer run completed.$(RESET)"
 
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢   Norminette   ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
@@ -95,4 +140,4 @@ clean_test:
 
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢ Phony targets  ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
-.PHONY: all clean fclean re valgrind clean_valgrind clean_test format norm test 
+.PHONY: all clean fclean re valgrind format norm test clean_valgrind clean_test run_asan run_usan run_lsan run_tsan

@@ -6,17 +6,17 @@
 /*   By: mzolotar <mzolotar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 14:14:26 by mzolotar          #+#    #+#             */
-/*   Updated: 2025/01/08 10:17:26 by mzolotar         ###   ########.fr       */
+/*   Updated: 2025/01/09 20:30:39 by mzolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /**
- * @brief
+ * @brief Retrieves PATH directories from the environment variables.
  *
- * @param
- * @return
+ * @param envp The environment variables array.
+ * @return A string array of directories or NULL if PATH is missing.
  */
 
 char	**get_paths_from_env(char *envp[])
@@ -43,10 +43,11 @@ char	**get_paths_from_env(char *envp[])
 }
 
 /**
- * @brief
+ * @brief Searches for a command in the given PATH directories.
  *
- * @param
- * @return
+ * @param argv_cmd The command to locate.
+ * @param paths The array of PATH directories.
+ * @return The full executable path or NULL if not found.
  */
 
 char	*find_command_in_paths(char *argv_cmd, char **paths)
@@ -78,10 +79,9 @@ char	*find_command_in_paths(char *argv_cmd, char **paths)
 }
 
 /**
- * @brief
+ * @brief Frees a dynamically allocated array of strings.
  *
- * @param
- * @return
+ * @param split_to_free The array of strings to free.
  */
 
 void	free_split_vars(char **split_to_free)
@@ -100,10 +100,12 @@ void	free_split_vars(char **split_to_free)
 }
 
 /**
- * @brief
+ * @brief Opens a file with the specified flags and mode.
  *
- * @param
- * @return
+ * @param pathern The file path to open.
+ * @param flags The flags used for opening the file.
+ * @param mode The file mode for creation (if applicable).
+ * @return The file descriptor or an error code on failure.
  */
 
 int	open_fd(char *pathern, int flags, mode_t mode)
@@ -123,15 +125,16 @@ int	open_fd(char *pathern, int flags, mode_t mode)
  * message using `perror`. It can either return `1` to indicate an error or
  * terminate the program by calling `exit(EXIT_FAILURE)`.
  *
- * @param ref A short integer used to select the error case.
+ * @param ref A short integer used to select the error case:
  *            1: Incorrect number of arguments.
  *            2: Error creating pipe.
  *            3: Error creating child process.
  *            4: Error opening file.
  *            5: Error with dup2.
  * @param should_exit If `1`,
-	the function exits the program with `EXIT_FAILURE`.
- *                    If `0`, it simply returns `1`.
+ * 					the function exits the program with `EXIT_FAILURE`.
+ * @param should_exit If `0`, it simply returns `1`.
+ *
  * @return Returns `1` if `should_exit` is `0`. Otherwise, it exits the program.
  */
 

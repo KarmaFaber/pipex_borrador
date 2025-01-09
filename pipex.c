@@ -6,17 +6,18 @@
 /*   By: mzolotar <mzolotar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:33:40 by mzolotar          #+#    #+#             */
-/*   Updated: 2025/01/08 10:17:04 by mzolotar         ###   ########.fr       */
+/*   Updated: 2025/01/09 20:24:03 by mzolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /**
- * @brief
+ * @brief Finds the executable path for a given command.
  *
- * @param
- * @return
+ * @param argv_cmd The command to locate.
+ * @param envp The environment variables array.
+ * @return A string containing the executable path or NULL on failure.
  */
 
 char	*find_path(char *argv_cmd, char *envp[])
@@ -32,10 +33,10 @@ char	*find_path(char *argv_cmd, char *envp[])
 }
 
 /**
- * @brief
+ * @brief Executes a command using execve.
  *
- * @param
- * @return
+ * @param argv The command string with arguments.
+ * @param envp The environment variables array.
  */
 
 void	execve_command(char *argv, char **envp)
@@ -66,10 +67,11 @@ void	execve_command(char *argv, char **envp)
 }
 
 /**
- * @brief
+ * @brief Executes the child process logic for a pipeline.
  *
- * @param
- * @return
+ * @param argv The array of command-line arguments.
+ * @param pipfd The file descriptors for the pipe.
+ * @param envp The environment variables array.
  */
 
 void	child_process(char *argv[], int pipfd[], char *envp[])
@@ -86,10 +88,11 @@ void	child_process(char *argv[], int pipfd[], char *envp[])
 }
 
 /**
- * @brief
+ * @brief Executes the parent process logic for a pipeline.
  *
- * @param
- * @return
+ * @param argv The array of command-line arguments.
+ * @param pipfd The file descriptors for the pipe.
+ * @param envp The environment variables array.
  */
 
 void	parent_process(char *argv[], int pipfd[], char *envp[])

@@ -6,7 +6,7 @@
 /*   By: mzolotar <mzolotar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:33:37 by mzolotar          #+#    #+#             */
-/*   Updated: 2025/01/08 09:07:15 by mzolotar         ###   ########.fr       */
+/*   Updated: 2025/01/09 20:38:38 by mzolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,13 @@
 //#➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌──includes:──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌➔#
 
 # include "libft/libft.h"
-# include <errno.h>     //referencias de error (errno, es f() no permitida).
-# include <fcntl.h>     // open
-# include <stdio.h>     //printf, perror
-# include <stdlib.h>    //exit
-# include <sys/types.h> // wait, waitpid
-# include <sys/wait.h>  // wait, waitpid
-# include <unistd.h>    // read, write, dup2, execve, dup, unlink, pipe, fork,
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
-/*#◉───▣───▢◇▢───▣───◉•◉───▣───▢Main code:▢───▣───◉•◉───▣───▢◇▢───▣───◉#*/
+/*#◉───▣───▢◇▢───▣───◉•◉───▣───▢ Main code: ▢───▣───◉•◉───▣───▢◇▢───▣───◉#*/
 
 // pipex.c (5/5)
 char	*find_path(char *argv_cmd, char *envp[]);
@@ -33,7 +31,8 @@ void	child_process(char *argv[], int pipfd[], char *envp[]);
 void	parent_process(char *argv[], int pipfd[], char *envp[]);
 int		main(int argc, char *argv[], char *envp[]);
 
-/*#◉───▣───▢◇▢───▣───◉•◉───▣───▢Utils:▢───▣───◉•◉───▣───▢◇▢───▣───◉#*/
+/*#◉───▣───▢◇▢───▣───◉•◉───▣───▢ Utils: ▢───▣───◉•◉───▣───▢◇▢───▣───◉#*/
+
 // pipex_utils.c (5/5)
 char	**get_paths_from_env(char *envp[]);
 char	*find_command_in_paths(char *argv_cmd, char **paths);

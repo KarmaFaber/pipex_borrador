@@ -1,123 +1,119 @@
 #✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Enunciado: ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀#
 // archivo1 < comando1 | comando2 > archivo2
 
-1. Contar líneas en un archivo (cuidado con este comando)
-C:		./pipex infile "ls -l" "wc -l" outfile
-bash:	ls -l < infile | wc -l > outfile
+1. Contar líneas en un archivo (ok)
+C: ./pipex infile "grep a1" "wc -l" outfile
+bash: grep "a1" < infile | wc -l > outfile 
 
 2. Contar palabras en un archivo (ok)
-C:		./pipex infile "ls -l" "wc -w" outfile
-bash:	ls -l < infile | wc -w > outfile
+C: ./pipex infile "ls -l" "wc -w" outfile
+bash: ls -l < infile | wc -w > outfile
 
-3. Buscar un patrón y contar líneas (ok)
-C:		./pipex infile "grep a1" "wc -l" outfile
-bash:	grep "a1" < infile | wc -l > outfile 
+3. Buscar un patrón y contar líneas (cuidado con este comando)
+C: ./pipex infile "ls -l" "wc -l" outfile
+bash: ls -l < infile | wc -l > outfile
 
 
 #✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── otros: ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀#
 
-1. Buscar un patrón y contar palabras
-C:		./pipex infile "grep hola" "wc -w" outfile
-bash: 	grep "hola" < infile | wc -w  > outfile
+4. Buscar un patrón y contar palabras
+C: ./pipex infile "grep hola" "wc -w" outfile
+bash: grep "hola" < infile | wc -w  > outfile
 
-2. Buscar otro patrón y contar palabras
-C:		./pipex infile "grep a1" "wc -w" outfile
-bash: 	grep "a1" < infile | wc -w  > outfile
+5. Buscar otro patrón y contar palabras
+C: ./pipex infile "grep a1" "wc -w" outfile
+bash: grep "a1" < infile | wc -w  > outfile
 
-3. Filtrar un patrón después de listar archivos
-C:		./pipex infile "ls -l" "grep pipex" outfile
-bash:	ls -l < infile | grep "pipex" > outfile
+6. Filtrar un patrón después de listar archivos
+C: ./pipex infile "ls -l" "grep pipex" outfile
+bash: ls -l < infile | grep "pipex" > outfile
 
-4. Prueba con comandos inexistentes (error esperado)
-C:		 ./pipex infile "invalidcommand" "wc -l" outfile
-Bash:	 invalidcommand < infile | wc -l > outfile
+7. Prueba con comandos inexistentes (error esperado)
+C: ./pipex infile "invalidcommand" "wc -l" outfile
+Bash: invalidcommand < infile | wc -l > outfile
 
-5. Redirigir un archivo vacío y contar palabras (entrada vacía)
-C: 		./pipex emptyfile "cat" "wc -w" outfile
-Bash: 	cat < emptyfile | wc -w > outfile
+8. Redirigir un archivo vacío y contar palabras (entrada vacía)
+C:  ./pipex emptyfile "cat" "wc -w" outfile
+Bash: cat < emptyfile | wc -w > outfile
 
-6. Concatenar el contenido de un archivo y buscar un patrón
-C: 		./pipex infile "cat" "grep hola" outfile
-Bash:	 cat < infile | grep "hola" > outfile
+9. Concatenar el contenido de un archivo y buscar un patrón
+C: ./pipex infile "cat" "grep hola" outfile
+Bash: cat < infile | grep "hola" > outfile
 
-7. Listar archivos y ordenar alfabéticamente
+10. Listar archivos y ordenar alfabéticamente
 C: ./pipex infile "ls -1" "sort" outfile
 Bash: ls -1 < infile | sort > outfile
 
 #✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Posibles Errores: ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀#
 
-1. Archivo de entrada no existente
+11. Archivo de entrada no existente
 Problema: El archivo infile no existe.
-C: 		./pipex non_existent_file "ls -l" "wc -l" outfile
-Bash: 	ls -l < non_existent_file | wc -l > outfile
+C: ./pipex non_existent_file "ls -l" "wc -l" outfile
+Bash: ls -l < non_existent_file | wc -l > outfile
 
-2. Archivo de salida sin permisos de escritura
+12. Archivo de salida sin permisos de escritura
 Problema: El archivo de salida outfile no tiene permisos de escritura.
-C: 		./pipex infile "ls -l" "wc -l" outfile
-Bash:	ls -l < infile | wc -l > outfile
+C: ./pipex infile "ls -l" "wc -l" outfile
+Bash: ls -l < infile | wc -l > outfile
 (Antes de ejecutar, asegúrate de retirar los permisos de escritura con chmod -w outfile.)
 
-3. Comando inexistente
+13. Comando inexistente
 Problema: El comando proporcionado no es válido.
-C: 		./pipex infile "invalidcommand" "wc -l" outfile
-Bash: 	invalidcommand < infile | wc -l > outfile
+C: ./pipex infile "invalidcommand" "wc -l" outfile
+Bash: invalidcommand < infile | wc -l > outfile
 
-4. Archivo de entrada sin permisos de lectura
+14. Archivo de entrada sin permisos de lectura
 Problema: El archivo de entrada infile no tiene permisos de lectura.
-C: 		./pipex infile "ls -l" "wc -l" outfile
-Bash:	 ls -l < infile | wc -l > outfile
+C: ./pipex infile "ls -l" "wc -l" outfile
+Bash: ls -l < infile | wc -l > outfile
 (Antes de ejecutar, asegúrate de retirar los permisos de lectura con chmod -r infile.)
 
-5. Número incorrecto de argumentos (falta un argumento)
-Problema: No se proporcionan los cinco argumentos requeridos.
+15. Número incorrecto de argumentos (falta un argumento)
+Problema: ./pipex infile "ls -l" outfile
 C: 		./pipex infile "ls -l" outfile
 
-6. Pipe fallido
-Problema: El sistema no puede crear el pipe.
-(Difícil de simular, pero podría suceder en sistemas con recursos limitados o en casos extremos.)
-
-7. Archivo vacío como entrada
+16. Archivo vacío como entrada
 Problema: El archivo de entrada infile está vacío.
 C: ./pipex emptyfile "cat" "wc -l" outfile
 Bash: cat < emptyfile | wc -l > outfile
 
-8. Archivo de salida no accesible (directorio no existente)
+17. Archivo de salida no accesible (directorio no existente)
 Problema: El archivo de salida está en un directorio inexistente.
 C: ./pipex infile "ls -l" "wc -l" nonexistent_dir/outfile
 Bash: ls -l < infile | wc -l > nonexistent_dir/outfile
 
-9. Espacios en los comandos (sin comillas)
+18. Espacios en los comandos (sin comillas)
 Problema: Un comando tiene espacios pero no está entre comillas.
 C: ./pipex infile ls -l wc -l outfile
 Bash: (No tiene equivalente exacto en Bash.)
 
-10. Archivo de salida ya existente (debe truncarse)
+19. Archivo de salida ya existente (debe truncarse)
 Problema: El archivo outfile ya existe, y se debe truncar correctamente.
 C: ./pipex infile "ls -l" "wc -l" outfile
 Bash: ls -l < infile | wc -l > outfile
 
-11. Uso de caracteres especiales en los comandos
+20. Uso de caracteres especiales en los comandos
 Problema: Un comando utiliza caracteres especiales que pueden causar errores si no están bien manejados.
 C: ./pipex infile "echo 'Hello | World'" "wc -w" outfile
 Bash: echo 'Hello | World' < infile | wc -w > outfile
 
-12. Comando grep con un patrón inexistente
+21. Comando grep con un patrón inexistente
 Problema: El patrón proporcionado no está presente en el archivo de entrada.
 C: ./pipex infile "grep non_existent_pattern" "wc -l" outfile
 Bash: grep non_existent_pattern < infile | wc -l > outfile
 
-13. Archivos no especificados (sin infile y outfile)
+22. Archivos no especificados (sin infile y outfile)
 Problema: Se omiten tanto el archivo de entrada como el de salida.
 C: ./pipex "" "ls -l" "wc -l" ""
 Bash: (No tiene equivalente exacto en Bash.)
 
-14. Interacción con grandes volúmenes de datos
+23. Interacción con grandes volúmenes de datos
 Problema: Archivo de entrada con un tamaño muy grande.
 C: ./pipex largefile "cat" "wc -l" outfile
 Bash: cat < largefile | wc -l > outfile
 (Asegúrate de generar largefile con datos grandes, por ejemplo, usando yes | head -n 1000000 > largefile.)
 
-15. Uso de redirección de errores estándar
+24. Uso de redirección de errores estándar
 Problema: Capturar errores de los comandos en un archivo separado.
 C: ./pipex infile "ls -l" "grep nonexistent" outfile
 Bash: ls -l < infile | grep nonexistent > outfile 2> errors.log

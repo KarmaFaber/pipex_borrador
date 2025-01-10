@@ -1,0 +1,93 @@
+✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 1 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀
+1. Redirigir un archivo vacío y contar palabras (entrada vacía)
+
+./pipex emptyfile "cat" "wc -w" outfile_c
+cat < emptyfile | wc -w > outfile_bash
+code outfile_c outfile_bash
+
+
+
+✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 2 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀
+2. Número incorrecto de argumentos (falta un argumento)
+
+echo "hola \na1 \na1 \na2" > infile
+./pipex infile "ls -l" outfile_c
+
+
+✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 3 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀
+3. Archivo vacío como entrada
+Problema: El archivo de entrada infile está vacío.
+
+./pipex emptyfile "cat" "wc -l" outfile_c
+cat < emptyfile | wc -l > outfile_bash
+code outfile_c outfile_bash
+
+
+✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 4 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀
+4. Archivo de entrada sin permisos de lectura
+
+chmod -r infile
+./pipex infile "ls -l" "wc -l" outfile
+ls -l < infile | wc -l > outfile
+code outfile_c outfile_bash
+
+
+✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 5 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀
+5. Archivo de salida no accesible (directorio no existente)
+Problema: El archivo de salida está en un directorio inexistente.
+
+./pipex infile "ls -l" "wc -l" nonexistent_dir/outfile_c
+ls -l < infile | wc -l > nonexistent_dir/outfile_bash
+code outfile_c outfile_bash
+
+
+✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 6 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀
+6. Espacios en los comandos (sin comillas)
+Problema: Un comando tiene espacios pero no está entre comillas.
+
+./pipex infile ls -l wc -l outfile_c
+
+Bash: (No tiene equivalente exacto en Bash.)
+
+✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 7 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀
+7. Interacción con grandes volúmenes de datos
+Problema: Archivo de entrada con un tamaño muy grande.
+(Asegúrate de generar largefile con datos grandes, por ejemplo, usando yes | head -n 10000 > largefile.)
+
+yes | head -n 10000 > largefile
+./pipex largefile "cat" "wc -l" outfile_c
+cat < largefile | wc -l > outfile_bash
+code outfile_c outfile_bash largefile
+
+
+✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 8 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀
+8. Archivos no especificados (sin infile y outfile)
+Problema: Se omiten tanto el archivo de entrada como el de salida.
+
+./pipex "" "ls -l" "wc -l" ""
+
+Bash: (No tiene equivalente exacto en Bash.)
+
+
+✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 9 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀
+9. Concatenar el contenido de un archivo y buscar un patrón
+
+./pipex infile "cat" "grep hola" outfile_c
+cat < infile | grep "hola" > outfile_bash
+code outfile_c outfile_bash
+
+
+✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 10 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀
+10. Listar archivos y ordenar alfabéticamente
+
+./pipex infile "ls -1" "sort" outfile_c
+ls -1 < infile | sort > outfile_bash
+code outfile_c outfile_bash
+
+
+✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 11 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀
+11. Uso de caracteres especiales en los comandos
+
+./pipex infile "echo 'Hello | World'" "wc -w" outfile_c
+echo 'Hello | World' < infile | wc -w > outfile_bash
+code outfile_c outfile_bash

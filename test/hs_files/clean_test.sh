@@ -13,11 +13,12 @@ read -r confirm
 if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
     echo -e "${GREEN}Deleting test stats...${RESET}"
 
-    # Eliminar archivos y directorios generados por los tests
-    rm -rf test/test_outputs/single_test
-    rm -rf test/test_outputs/multiple_tests_100
-    rm -rf test/test_outputs/multiple_tests_500
-    rm -rf test/test_outputs/test_valgrind_outputs
+    # Limpiar los archivos que comienzan con 'outfile_' en el directorio raíz
+    rm -f ./outfile_*
+
+    # Eliminar todos los directorios generados por los tests
+    rm -rf test/test_outputs/*
+    
 
     # Confirmación de la eliminación
     echo -e "${GREEN}All test stats have been deleted successfully.${RESET}"

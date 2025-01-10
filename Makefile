@@ -72,6 +72,10 @@ clean_valgrind:
 	test/hs_files/./clean_valgrind.sh
 
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢ Sanitizers ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+#◉──▢◇▢───▣───◉•◉────▢Sanitizer  All▢────◉•◉───▣───▢◇▢──◉#
+
+san_all: run_asan run_lsan run_tsan run_usan
+
 #◉──▢◇▢───▣───◉•◉────▢AddressSanitizer ▢────◉•◉───▣───▢◇▢──◉#
 
 asan: $(PIPEX_OBJS) $(LIBFT)
@@ -127,17 +131,41 @@ norm:
 
 format: 
 	c_formatter_42 $(PIPEX_SRCS) pipex.h
+	
 
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢      Test      ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
+test_all: norm test valgrind san_all
+
 test: all
-	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌── Starting test: ──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌➔$(RESET)"
+#añadir infile y contenido al infile
+	@touch infile
+	@echo "hola \na1 \na1 \na2" > infile
+	@echo "   "
+#revisar que *.sh tienen permisis en /test/sh_files/
+	@echo "Ensuring all scripts in /test/hs_files/ have execution permissions..."
+	@find test/hs_files/ -name "*.sh" ! -perm -111 -exec chmod +x {} \;
+#startr test common commands:
+	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌── Starting tests: common commands: ──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌➔$(RESET)"
 	@test/hs_files/./test_pipex.sh
-	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌── End of test. ──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌➔$(RESET)"
+	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌── End of tests: common commands. ──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌➔$(RESET)"
+	@echo "   "
+#startr test special_cases commands:
+	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌── Starting tests: special_cases command: ──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌➔$(RESET)"
+	@test/hs_files/./special_cases.sh
+	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌── End of tests: special_cases command. ──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌➔$(RESET)"
+	@echo "   "
 
 clean_test:
-	test/hs_files/./clean_test.sh
+	@test/hs_files/./clean_test.sh
+	@test -f errors.log && rm errors.log || true
+	@test -f infile && rm infile || true
+	@test -f outfile && rm outfile || true
 
+fclean_test: fclean clean_test
+
+fclean_all: fclean clean_test clean_valgrind
+	
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢ Phony targets  ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
-.PHONY: all clean fclean re valgrind format norm test clean_valgrind clean_test run_asan run_usan run_lsan run_tsan
+.PHONY: all clean fclean re format norm test test_all valgrind san_all run_asan run_usan run_lsan run_tsan clean_valgrind clean_test fclean_all fclean_test

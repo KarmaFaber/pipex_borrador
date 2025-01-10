@@ -1,0 +1,85 @@
+#◉────▣───▢◇▢───▣────◉•◉───▣───▢   Colors:   ▢───▣───◉•◉───▣────▢◇▢───▣───◉#
+
+BLACK   := \033[0;30m
+RED     := \033[0;31m
+GREEN   := \033[0;32m
+YELLOW  := \033[0;33m
+BLUE    := \033[0;34m
+MAGENTA := \033[0;35m
+CYAN    := \033[0;36m
+
+CURRENT_COLOR := \033[0;34m
+RESET   := \033[0m
+
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢   Variables:   ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+
+# Comandos y variables generales
+NAME        := pipex
+CC          := cc
+CFLAGS      := -Wall -Wextra -Werror 
+RM          := rm -rf
+
+PIPEX_PATH  := ..
+LIBFT_PATH  := $(PIPEX_PATH)/libft
+INCLUDES    := -I$(PIPEX_PATH)
+
+VALGRIND := valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
+            --error-limit=no --log-file=valgrind_outputs/valgrind_output_$(shell date +%Y%m%d_%H%M%S).log -s
+
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢   Norminette   ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+norm:
+	@norminette $(PIPEX_PATH) $(LIBFT_PATH)
+
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢      Test      ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+
+test_all: norm test valgrind san_all
+
+test:
+	@touch infile
+	@echo "hola\na1\na1\na2" > infile
+	@find hs_files/ -name "*.sh" ! -perm -111 -exec chmod +x {} \;
+	@hs_files/./test_pipex.sh
+	@hs_files/./special_cases.sh
+
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢    Valgrind    ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+
+valgrind:
+	@$(MAKE) -C $(PIPEX_PATH) all
+	@$(VALGRIND) $(PIPEX_PATH)/$(NAME) infile "ls -l" "wc -l" outfile
+	@hs_files/./open_valgrind_log.sh
+
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢ Sanitizers ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+#◉──▢◇▢───▣───◉•◉────▢Sanitizer  All▢────◉•◉───▣───▢◇▢──◉#
+
+san_all: run_asan run_usan run_lsan run_tsan
+
+run_asan:
+	@$(MAKE) -C $(PIPEX_PATH) asan
+	$(PIPEX_PATH)/$(NAME) infile "ls -l" "wc -l" outfile
+
+run_usan:
+	@$(MAKE) -C $(PIPEX_PATH) usan
+	$(PIPEX_PATH)/$(NAME) infile "ls -l" "wc -l" outfile
+
+run_lsan:
+	@$(MAKE) -C $(PIPEX_PATH) lsan
+	$(PIPEX_PATH)/$(NAME) infile "ls -l" "wc -l" outfile
+
+run_tsan:
+	@$(MAKE) -C $(PIPEX_PATH) tsan
+	$(PIPEX_PATH)/$(NAME) infile "ls -l" "wc -l" outfile
+
+clean_valgrind:
+	hs_files/./clean_valgrind.sh
+
+clean_test:
+	hs_files/./clean_test.sh
+	rm -f errors.log infile outfile
+
+fclean_all:
+	@$(MAKE) -C $(PIPEX_PATH) fclean
+	$(MAKE) clean_test clean_valgrind
+
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢ Phony targets  ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+
+.PHONY: norm test_all test valgrind san_all run_asan run_usan run_lsan run_tsan clean_valgrind clean_test fclean_all

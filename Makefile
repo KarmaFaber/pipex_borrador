@@ -26,7 +26,7 @@ LIBFT_DIR	:= libft/
 LIBFT		:= $(LIBFT_DIR)/libft.a
 INCLUDES_LIBFT := -I$(LIBFT_DIR)
 
-#◉───▣───▢◇▢───▣───◉•◉───▣───▢ push_swap srcs ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢ pipex srcs ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
 PIPEX_SRCS	:= pipex.c pipex_utils.c
 
@@ -127,12 +127,7 @@ norm:
 	@norminette libft $(PIPEX_SRCS) pipex.h
 	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌── Norminette completed. Check your output for details. ─╌➣⋆➣╌─⤏➵•➵⤐─╌╌➣⋆➣╌╌─$(RESET)"
 
-#◉───▣───▢◇▢───▣───◉•◉───▣───▢   Format   ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
-
-format: 
-	c_formatter_42 $(PIPEX_SRCS) pipex.h
 	
-
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢      Test      ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
 test_all: norm test valgrind san_all
@@ -142,7 +137,7 @@ test: all
 	@touch infile
 	@echo "hola \na1 \na1 \na2" > infile
 	@echo "   "
-#revisar que *.sh tienen permisis en /test/sh_files/
+#revisar que *.sh tienen permisos en /test/sh_files/
 	@echo "Ensuring all scripts in /test/hs_files/ have execution permissions..."
 	@find test/hs_files/ -name "*.sh" ! -perm -111 -exec chmod +x {} \;
 #startr test common commands:
@@ -168,4 +163,4 @@ fclean_all: fclean clean_test clean_valgrind
 	
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢ Phony targets  ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
-.PHONY: all clean fclean re format norm test test_all valgrind san_all run_asan run_usan run_lsan run_tsan clean_valgrind clean_test fclean_all fclean_test
+.PHONY: all clean fclean re norm test test_all valgrind san_all run_asan run_usan run_lsan run_tsan clean_valgrind clean_test fclean_all fclean_test

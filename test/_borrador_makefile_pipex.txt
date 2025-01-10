@@ -1,0 +1,58 @@
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢   Variables:   ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+
+NAME        := pipex
+CC          := cc
+CFLAGS      := -Wall -Wextra -Werror 
+RM          := rm -rf
+
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢ Libft Variables ▢───▣───◉•◉───▣───▢◇▢───▣──◉#
+
+LIBFT_DIR   := libft/
+LIBFT       := $(LIBFT_DIR)/libft.a
+INCLUDES_LIBFT := -I$(LIBFT_DIR)
+
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢ pipex srcs ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+
+PIPEX_SRCS  := pipex.c pipex_utils.c
+PIPEX_OBJS  := $(PIPEX_SRCS:.c=.o)
+
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢     rules      ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+
+all: $(LIBFT) $(NAME)
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
+
+$(NAME): $(LIBFT) $(PIPEX_OBJS) 
+	$(CC) $(CFLAGS) -o $(NAME) $(PIPEX_OBJS) -L$(LIBFT_DIR) -lft $(INCLUDES_LIBFT)
+	@echo "$(NAME) created."
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(INCLUDES_LIBFT) -c $< -o $@
+
+clean:
+	$(RM) $(PIPEX_OBJS)
+	$(MAKE) -C $(LIBFT_DIR) clean
+	@echo "All object files have been cleaned."
+
+fclean: clean
+	$(RM) $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
+	@echo "$(NAME) and libft.a have been cleaned."
+
+re: fclean all
+
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢      Test      ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+
+test_all:
+	$(MAKE) -C test test_all
+
+clean_test:
+	$(MAKE) -C test clean_test
+
+fclean_all:
+	$(MAKE) -C test fclean_all
+
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢ Phony targets  ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+
+.PHONY: all clean fclean re test_all clean_test fclean_all

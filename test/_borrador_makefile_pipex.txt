@@ -1,3 +1,16 @@
+#◉────▣───▢◇▢───▣────◉•◉───▣───▢   Colors:   ▢───▣───◉•◉───▣────▢◇▢───▣───◉#
+
+BLACK   := \033[0;30m
+RED     := \033[0;31m
+GREEN   := \033[0;32m
+YELLOW  := \033[0;33m
+BLUE    := \033[0;34m
+MAGENTA := \033[0;35m
+CYAN    := \033[0;36m
+
+CURRENT_COLOR := \033[0;34m
+RESET   := \033[0m
+
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢   Variables:   ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
 NAME        := pipex
@@ -25,7 +38,7 @@ $(LIBFT):
 
 $(NAME): $(LIBFT) $(PIPEX_OBJS) 
 	$(CC) $(CFLAGS) -o $(NAME) $(PIPEX_OBJS) -L$(LIBFT_DIR) -lft $(INCLUDES_LIBFT)
-	@echo "$(NAME) created."
+	@echo "$(CURRENT_COLOR) $(NAME) created.\n$(RESET)"
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES_LIBFT) -c $< -o $@
@@ -33,26 +46,32 @@ $(NAME): $(LIBFT) $(PIPEX_OBJS)
 clean:
 	$(RM) $(PIPEX_OBJS)
 	$(MAKE) -C $(LIBFT_DIR) clean
-	@echo "All object files have been cleaned."
+	@echo "$(CURRENT_COLOR)All object files have been cleaned.\n$(RESET)"
 
 fclean: clean
 	$(RM) $(NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
-	@echo "$(NAME) and libft.a have been cleaned."
+	@echo "$(CURRENT_COLOR) $(NAME) and libft.a: have been cleaned.\n$(RESET)"
 
 re: fclean all
 
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢      Test      ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
-
+#calgrind + Sanitizers + Norminette + test_commands + test_special_cases
 test_all:
-	$(MAKE) -C test test_all
+	$(MAKE) -C test_all
 
+#clean temporary files of test and remuves: infile, outfile, errors.log (created executing test/hs_files/./test_pipex.sh)
 clean_test:
-	$(MAKE) -C test clean_test
+	$(MAKE) -C clean_test
 
+#fclean linft + fclean pipex + clean_test
+fclean_test:
+	$(MAKE) -C fclean_test
+
+#fclean linft + fclean pipex + clean_test + clean_valgrind
 fclean_all:
-	$(MAKE) -C test fclean_all
+	$(MAKE) -C fclean_all
 
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢ Phony targets  ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
-.PHONY: all clean fclean re test_all clean_test fclean_all
+.PHONY: all clean fclean re test_all clean_test fclean_test fclean_all

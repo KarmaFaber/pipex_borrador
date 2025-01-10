@@ -4,7 +4,6 @@ GREEN="\033[0;32m"
 RED="\033[0;31m"
 RESET="\033[0m"
 
-
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 1 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
 echo "Description: Redirect an empty file and count words (empty input)"
 
@@ -191,11 +190,3 @@ fi
 
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── End of Test 11 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
 echo ""
-
-
-
-
-
-
-
-

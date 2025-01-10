@@ -6,7 +6,7 @@
 /*   By: mzolotar <mzolotar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:33:40 by mzolotar          #+#    #+#             */
-/*   Updated: 2025/01/09 20:24:03 by mzolotar         ###   ########.fr       */
+/*   Updated: 2025/01/10 20:10:31 by mzolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	execve_command(char *argv, char **envp)
 		exit(EXIT_FAILURE);
 	}
 }
-
 /**
  * @brief Executes the child process logic for a pipeline.
  *

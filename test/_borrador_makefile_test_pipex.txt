@@ -13,7 +13,6 @@ RESET   := \033[0m
 
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢   Variables:   ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
-# Comandos y variables generales
 NAME        := pipex
 CC          := cc
 CFLAGS      := -Wall -Wextra -Werror 
@@ -23,51 +22,99 @@ PIPEX_PATH  := ..
 LIBFT_PATH  := $(PIPEX_PATH)/libft
 INCLUDES    := -I$(PIPEX_PATH)
 
-VALGRIND := valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
-            --error-limit=no --log-file=valgrind_outputs/valgrind_output_$(shell date +%Y%m%d_%H%M%S).log -s
+VALGRIND := valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-limit=no --log-file=valgrind_outputs/valgrind_output_$(shell date +%Y%m%d_%H%M%S).log -s
 
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢   Norminette   ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 norm:
+	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌── Checking Norminette: ──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌➔$(RESET)"
 	@norminette $(PIPEX_PATH) $(LIBFT_PATH)
+	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌── Norminette completed. Check your output for details. ─╌➣⋆➣╌─⤏➵•➵⤐─╌╌➣⋆➣╌╌─$(RESET)"
 
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢      Test      ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
 test_all: norm test valgrind san_all
 
 test:
-	@touch infile
-	@echo "hola\na1\na1\na2" > infile
+#execute pipex all command:
+	@$(MAKE) -C $(PIPEX_PATH) all
+#add infile and some words
+	@$(PIPEX_PATH)/touch infile
+	@$(PIPEX_PATH)/echo "hola\na1\na1\na2" > infile
+#check that *.sh have permissions in /test/sh_files/
+#	@echo "Ensuring all scripts in /test/hs_files/ have execution permissions..."
 	@find hs_files/ -name "*.sh" ! -perm -111 -exec chmod +x {} \;
+#startr test common commands:
+	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌── Starting tests: common commands: ──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌➔$(RESET)"
 	@hs_files/./test_pipex.sh
+	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌── End of tests: common commands. ──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌➔$(RESET)"
+	@echo "   "
+#startr test special_cases commands:
+	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌── Starting tests: special_cases command: ──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌➔$(RESET)"
 	@hs_files/./special_cases.sh
+	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌── End of tests: special_cases command. ──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌➔$(RESET)"
+	@echo "   "
 
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢    Valgrind    ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
 valgrind:
+	@echo "$(CURRENT_COLOR)➵⤐──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌──Running Valgrind..──╌╌➣⋆➣╌╌──⤏➵•➵⤐──╌╌➣⋆➣╌╌──$(RESET)"
 	@$(MAKE) -C $(PIPEX_PATH) all
 	@$(VALGRIND) $(PIPEX_PATH)/$(NAME) infile "ls -l" "wc -l" outfile
 	@hs_files/./open_valgrind_log.sh
+	@echo "$(CURRENT_COLOR)➵⤐╌╌➣⋆➣╌─⤏➵•➵⤐─╌╌➣⋆➣── Valgrind completed. Check valgrind_output.log for details. ─╌➣⋆➣╌─⤏➵•➵⤐─╌╌➣⋆➣╌╌─$(RESET)"
+
 
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢ Sanitizers ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 #◉──▢◇▢───▣───◉•◉────▢Sanitizer  All▢────◉•◉───▣───▢◇▢──◉#
 
 san_all: run_asan run_usan run_lsan run_tsan
 
-run_asan:
+#◉──▢◇▢───▣───◉•◉────▢AddressSanitizer ▢────◉•◉───▣───▢◇▢──◉#
+
+asan:
 	@$(MAKE) -C $(PIPEX_PATH) asan
-	$(PIPEX_PATH)/$(NAME) infile "ls -l" "wc -l" outfile
+	@echo "$(CURRENT_COLOR)➵ AddressSanitizer compilation complete.$(RESET)"
 
-run_usan:
+run_asan: asan
+	@echo "$(CURRENT_COLOR)➵ Running with AddressSanitizer: $(RESET)"
+	$(PIPEX_PATH)/$(NAME) infile "ls -l" "wc -l" outfile
+	@echo "$(CURRENT_COLOR)➵ AddressSanitizer run completed.$(RESET)"
+
+#◉──▢◇▢───▣───◉•◉────▢UndefinedBehaviorSanitizer ▢────◉•◉───▣───▢◇▢──◉#
+
+usan:
 	@$(MAKE) -C $(PIPEX_PATH) usan
-	$(PIPEX_PATH)/$(NAME) infile "ls -l" "wc -l" outfile
+	@echo "$(CURRENT_COLOR)➵ UndefinedBehaviorSanitizer compilation complete.$(RESET)"
 
-run_lsan:
+run_usan: usan
+	@echo "$(CURRENT_COLOR)➵ Running with UndefinedBehaviorSanitizer: $(RESET)"
+	$(PIPEX_PATH)/$(NAME) infile "ls -l" "wc -l" outfile
+	@echo "$(CURRENT_COLOR)➵ UndefinedBehaviorSanitizer run completed.$(RESET)"
+
+#◉──▢◇▢───▣───◉•◉────▢LeakSanitizer ▢────◉•◉───▣───▢◇▢──◉#
+
+lsan:
 	@$(MAKE) -C $(PIPEX_PATH) lsan
-	$(PIPEX_PATH)/$(NAME) infile "ls -l" "wc -l" outfile
+	@echo "$(CURRENT_COLOR)➵ LeakSanitizer compilation complete.$(RESET)"
 
-run_tsan:
-	@$(MAKE) -C $(PIPEX_PATH) tsan
+run_lsan: lsan
+	@echo "$(CURRENT_COLOR)➵ Running with LeakSanitizer: $(RESET)"
 	$(PIPEX_PATH)/$(NAME) infile "ls -l" "wc -l" outfile
+	@echo "$(CURRENT_COLOR)➵ LeakSanitizer run completed.$(RESET)"
+
+#◉──▢◇▢───▣───◉•◉────▢ThreadSanitizer ▢────◉•◉───▣───▢◇▢──◉#
+
+tsan:
+	@$(MAKE) -C $(PIPEX_PATH) tsan
+	@echo "$(CURRENT_COLOR)➵ ThreadSanitizer compilation complete.$(RESET)"
+
+run_tsan: tsan
+	@echo "$(CURRENT_COLOR)➵ Running with ThreadSanitizer: $(RESET)"
+	$(PIPEX_PATH)/$(NAME) infile "ls -l" "wc -l" outfile
+	@echo "$(CURRENT_COLOR)➵ ThreadSanitizer run completed.$(RESET)"
+
+
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢ Clean commands ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
 clean_valgrind:
 	hs_files/./clean_valgrind.sh
@@ -76,10 +123,16 @@ clean_test:
 	hs_files/./clean_test.sh
 	rm -f errors.log infile outfile
 
+#◉───▣───▢◇▢───▣───◉•◉───▣───▢ fclean commands ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
+
+fclean_test:
+	@$(MAKE) -C $(PIPEX_PATH) fclean
+	@$(MAKE) clean_test
+
 fclean_all:
 	@$(MAKE) -C $(PIPEX_PATH) fclean
 	$(MAKE) clean_test clean_valgrind
 
 #◉───▣───▢◇▢───▣───◉•◉───▣───▢ Phony targets  ▢───▣───◉•◉───▣───▢◇▢───▣───◉#
 
-.PHONY: norm test_all test valgrind san_all run_asan run_usan run_lsan run_tsan clean_valgrind clean_test fclean_all
+.PHONY: norm test_all test valgrind san_all run_asan run_usan run_lsan run_tsan clean_valgrind clean_test fclean_test fclean_all

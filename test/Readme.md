@@ -78,10 +78,20 @@ The `test` directory has its own `Makefile` that facilitates testing. The follow
   - `make run_tsan`: Runs with ThreadSanitizer.
 
 - **Cleanup Targets**
-  - `make clean_test`: Cleans test-related files such as `infile`, `outfile`, and temporary files.
-  - `make clean_valgrind`: Deletes all valgrind logs.
-  - `make fclean_test`: Performs a full cleanup of compiled files of proyect and cleans test-related files such as `infile`, `outfile`, and temporary files..
-  - `make fclean_all`: Performs a full cleanup of test and compiled files of proyect.
+This commands will ask the user if he/she wants to delete temporary files: 
+```bash
+⚠️  Warning: Are you sure you want to delete all test stats? (y/n).
+
+🛑 Warning: Are you sure you want to delete all Valgrind log files? (y/n)
+```
+
+⚠️  Warning: Are you sure you want to delete all test stats? (y/n)
+
+
+  - `make clean_test`: Cleans test-related files such as `infile`, `outfile`, and temporary files. 
+  - `make clean_valgrind`: Deletes all valgrind logs. 
+  - `make fclean_test`: Performs a full cleanup of compiled files of proyect and cleans test-related files such as `infile`, `outfile`, and temporary files.. 
+  - `make fclean_all`: Performs a full cleanup of test and compiled files of proyect. 
 
 ## Testing Workflow
 

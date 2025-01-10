@@ -6,7 +6,7 @@ RESET="\033[0m"
 
 
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 1 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
-echo "Description: Redirigir un archivo vacío y contar palabras (entrada vacía)"
+echo "Description: Redirect an empty file and count words (empty input)"
 
 ./pipex emptyfile "cat" "wc -w" outfile_c_1
 cat < emptyfile | wc -w > outfile_bash_1
@@ -22,9 +22,8 @@ fi
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── End of Test 1 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
 echo ""
 
-
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 2 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
-echo "Description: Número incorrecto de argumentos (falta un argumento)"
+echo "Description: Incorrect number of arguments (missing argument)"
 
 echo "hola \na1 \na1 \na2" > infile
 ./pipex infile "ls -l" outfile_c_2
@@ -34,7 +33,7 @@ echo "✾❀──────✿❀❁✿──────❀✾•❀──�
 echo ""
 
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 3 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
-echo "Description: El archivo de entrada infile está vacío."
+echo "Description: The input file infile is empty."
 
 rm infile
 touch infile
@@ -54,7 +53,7 @@ echo "✾❀──────✿❀❁✿──────❀✾•❀──�
 echo ""
 
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 4 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
-echo "Description: Archivo de entrada sin permisos de lectura."
+echo "Description: Input file without read permissions."
 
 rm infile
 touch infile
@@ -75,7 +74,7 @@ echo "✾❀──────✿❀❁✿──────❀✾•❀──�
 echo ""
 
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 5 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
-echo "Description: Archivo de salida no accesible (directorio no existente)."
+echo "Description: Output file not accessible (non-existent directory)."
 
 chmod +r infile
 ./pipex infile "ls -l" "wc -l" nonexistent_dir/outfile_c_5
@@ -86,17 +85,17 @@ echo "✾❀──────✿❀❁✿──────❀✾•❀──�
 echo ""
 
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 6 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
-echo "Description: Espacios en los comandos (sin comillas)"
+echo "Description: Spaces in commands (without quotes)"
 
 ./pipex infile ls -l wc -l outfile_c_6
 
-#Bash: (No tiene equivalente exacto en Bash.)
+#Bash: (No exact equivalent in Bash.)
 
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── End of Test 6 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
 echo ""
 
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 7 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
-echo "Description: Interacción con grandes volúmenes de datos"
+echo "Description: Interaction with large volumes of data"
 
 yes | head -n 10000 > largefile
 ./pipex largefile "cat" "wc -l" outfile_c_7
@@ -117,18 +116,18 @@ echo "✾❀──────✿❀❁✿──────❀✾•❀──�
 echo ""
 
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 8 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
-echo "Description: Archivos no especificados (sin infile y outfile)"
+echo "Description: Files not specified (missing infile and outfile)"
 
 ./pipex "" "ls -l" "wc -l" ""
 
-#Bash: (No tiene equivalente exacto en Bash.)
+#Bash: (No exact equivalent in Bash.)
 
 
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── End of Test 8 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
 echo ""
 
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 9 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
-echo "Description: Concatenar el contenido de un archivo y buscar un patrón"
+echo "Description: Concatenate the content of a file and search for a pattern"
 
 echo "hola\na1\na1\na2" > infile
 ./pipex infile "cat" "grep hola" outfile_c_9
@@ -148,20 +147,20 @@ echo ""
 
 
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 10 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
-echo "Description: Listar archivos y ordenar alfabéticamente"
+echo "Description: List files and sort alphabetically"
 
-#si no añadimos los outfile antes del test no se contaran bien los n de arch y dir:
+#if we do not add the outfile before the test the arch and dir counts will not be correct:
 if [ -f infile ]; then
-    # Si es verdadero, ejecutar alguna acción
+    # If true, execute some action
     touch infile
 else
-    # Si no es verdadero (el archivo no existe o no es un archivo regular)
+    # If not true (the file does not exist or is not a regular file)
     false
 fi
-# comandos:
+# commands:
 ls -1 < infile | sort > outfile_bash_10
 ./pipex infile "ls -1" "sort" outfile_c_10
-code outfile_c_10 outfile_bash_10
+#code outfile_c_10 outfile_bash_10
 
 # Compare outputs
 if diff -q "outfile_c_10" "outfile_bash_10" >/dev/null; then
@@ -174,8 +173,9 @@ fi
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── End of Test 10 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
 echo ""
 
+
 echo "✾❀──────✿❀❁✿──────❀✾•❀──────✿❀❁✿── Test 11 ──✿❀❁✿──────❀✾•❀──────✿❀❁✿─────✾❀"
-echo "Description: Concatenar el contenido de un archivo y buscar un patrón"
+echo "Description: Concatenate the contents of a file and search for a pattern."
 
 
 ./pipex infile "echo 'Hello | World'" "wc -w" outfile_c_11

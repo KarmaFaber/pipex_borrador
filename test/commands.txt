@@ -1,44 +1,43 @@
-1. Contar líneas en un archivo.
+1. Count lines in a file.
 C: ./pipex infile "grep a1" "wc -l" outfile
 bash: grep "a1" < infile | wc -l > outfile 
 
-2. Contar palabras en ls -l 
+2. Count words in ls -l 
 C: ./pipex infile "ls -l" "wc -w" outfile
 bash: ls -l < infile | wc -w > outfile
 
-3. Buscar un patrón y contar líneas.
+3. Search a pattern and count lines.
 C: ./pipex infile "ls -l" "wc -l" outfile
 bash: ls -l < infile | wc -l > outfile
 
-4. Buscar un patrón y contar palabras.
+4. Search a pattern and count words.
 C: ./pipex infile "grep hola" "wc -w" outfile
 bash: grep "hola" < infile | wc -w  > outfile
 
-5. Buscar otro patrón y contar palabras.
+5. Search another pattern and count words.
 C: ./pipex infile "grep a1" "wc -w" outfile
 bash: grep "a1" < infile | wc -w  > outfile
 
-6. Filtrar un patrón después de listar archivos.
+6. Filter a pattern after listing files.
 C: ./pipex infile "ls -l" "grep pipex" outfile
 bash: ls -l < infile | grep "pipex" > outfile
 
-7. Prueba con comandos inexistentes (error esperado).
+7. Test with nonexistent commands (expected error).
 C: ./pipex infile "invalidcommand" "wc -l" outfile
 Bash: invalidcommand < infile | wc -l > outfile
 
-8. Archivo infile no existente
+8. Nonexistent infile file
 C: ./pipex non_existent_file "ls -l" "wc -l" outfile
 Bash: ls -l < non_existent_file | wc -l > outfile
 
-9. Comando proporcionado no es válido
+9. Provided command is invalid
 C: ./pipex infile "invalidcommand" "wc -l" outfile
 Bash: invalidcommand < infile | wc -l > outfile
 
-10. Comando grep con un patrón inexistente
+10. Grep command with a nonexistent pattern
 C: ./pipex infile "grep non_existent_pattern" "wc -l" outfile
 Bash: grep non_existent_pattern < infile | wc -l > outfile
 
-11. Uso de redirección de errores estándar
+11. Use of standard error redirection
 C: ./pipex infile "ls -l" "grep nonexistent" outfile
 Bash: ls -l < infile | grep nonexistent > outfile 2> errors.log
-
